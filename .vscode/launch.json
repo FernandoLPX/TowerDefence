@@ -1,0 +1,20 @@
+{
+    "type": "java",
+    "name": "Launch",
+    "request": "launch",
+    "mainClass": "Main",
+    "projectName": "TowerDefence",
+    "classpath": [
+        "${workspaceFolder}/bin",
+        "${workspaceFolder}/res"
+    ],
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "TowerDefence_67141efb"
+        }
+    ]
+}
