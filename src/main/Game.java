@@ -2,6 +2,9 @@ package main;
 
 import javax.swing.JFrame;
 
+import helpz.LoadSave;
+import managers.TileManager;
+import scenes.Editing;
 import scenes.Menu;
 import scenes.Playing;
 import scenes.Settings;
@@ -20,9 +23,12 @@ public class Game extends JFrame implements Runnable {
     private Menu menu;
     private Playing playing;
     private Settings settings;
+    private Editing editing;
+    private TileManager tileManager;
 
     public Game() {
         initClasses();
+        createDefaultLevel();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -31,12 +37,22 @@ public class Game extends JFrame implements Runnable {
         setVisible(true);
     }
 
+    private void createDefaultLevel() {
+        int[] arr = new int[400];
+        for (int i = 0; i < arr.length; i++)
+            arr[i] = 0;
+
+        LoadSave.CreateLevel("new_level", arr);
+    }
+
     private void initClasses() {
+        tileManager = new TileManager();
         render = new Render(this);
         gameScreen = new GameScreen(this);
         menu = new Menu(this);
         playing = new Playing(this);
         settings = new Settings(this);
+        editing = new Editing(this);
     }
 
     public void start() {
@@ -108,4 +124,11 @@ public class Game extends JFrame implements Runnable {
         return gameScreen;
     }
 
+    public Editing getEditor() {
+        return editing;
+    }
+
+    public TileManager getTileManager() {
+        return tileManager;
+    }
 }
