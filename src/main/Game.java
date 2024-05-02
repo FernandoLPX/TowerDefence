@@ -30,11 +30,11 @@ public class Game extends JFrame implements Runnable {
         initClasses();
         createDefaultLevel();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
         setResizable(false);
         add(gameScreen);
         pack();
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
     private void createDefaultLevel() {
