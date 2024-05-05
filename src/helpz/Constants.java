@@ -46,6 +46,20 @@ public class Constants {
             }
             return 0;
         }
+
+        public static int GetStartHealth(int enemyType) {
+            switch (enemyType) {
+                case ORC:
+                    return 100;
+                case BAT:
+                    return 60;
+                case KNIGHT:
+                    return 250;
+                case WOLF:
+                    return 85;
+            }
+            return 0;
+        }
     }
 
     public static class Tiles {

@@ -2,7 +2,9 @@ package scenes;
 
 import static helpz.Constants.Tiles.GRASS_TILE;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import helpz.LoadSave;
@@ -63,6 +65,12 @@ public class Playing extends GameScene implements SceneMethods {
         enemyManager.draw(g);
         towerManager.draw(g);
         drawSelectedTower(g);
+        drawHighLight(g);
+    }
+
+    private void drawHighLight(Graphics g) {
+        g.setColor(Color.PINK);
+        g.drawRect(mouseX, mouseY, 32, 32);
     }
 
     private void drawSelectedTower(Graphics g) {
@@ -125,6 +133,12 @@ public class Playing extends GameScene implements SceneMethods {
         int id = lvl[y / 32][x / 32];
         int tileType = getGame().getTileManager().getTile(id).getTileType();
         return tileType == GRASS_TILE;
+    }
+
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
+            selectedTower = null;
+        }
     }
 
     @Override
