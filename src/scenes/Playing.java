@@ -118,9 +118,9 @@ public class Playing extends GameScene implements SceneMethods {
                 // get tower if exists on xy
                 Tower t = getTowerAt(mouseX, mouseY);
                 // if (t == null)
-                //     return;
+                // return;
                 // else
-                    actionBar.displayTower(t);
+                actionBar.displayTower(t);
             }
         }
     }
@@ -136,7 +136,7 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             selectedTower = null;
         }
     }
@@ -168,6 +168,10 @@ public class Playing extends GameScene implements SceneMethods {
 
     public TowerManager getTowerManager() {
         return towerManager;
+    }
+
+    public EnemyManager getEnemyManager() {
+        return enemyManager;
     }
 
 }
