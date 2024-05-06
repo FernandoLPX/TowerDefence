@@ -9,8 +9,6 @@ import helpz.LoadSave;
 import objects.Tower;
 import scenes.Playing;
 
-import static helpz.Constants.Towers.*;
-
 public class TowerManager {
 
     private Playing playing;
@@ -35,19 +33,23 @@ public class TowerManager {
     }
 
     public void update() {
-        attackEnemyIfClose();
+        for (Tower t : towers) {
+            t.update();
+            attackEnemyIfClose(t);
+        }
     }
 
-    private void attackEnemyIfClose() {
-        for (Tower t : towers) {
-            for (Enemy e : playing.getEnemyManager().getEnemies()) {
-                if (e.isAlive())
-                    if (isEnemyInRange(t, e)) {
-                        e.hurt(1);
-                    } else {
-                        // we do nothing
+    private void attackEnemyIfClose(Tower t) {
+        for (Enemy e : playing.getEnemyManager().getEnemies()) {
+            if (e.isAlive())
+                if (isEnemyInRange(t, e)) {
+                    if (t.isCooldownOver()) {
+                        playing.shootEnemy(t, e);
+                        t.resetCooldown();
                     }
-            }
+                } else {
+                    // we do nothing
+                }
         }
     }
 
