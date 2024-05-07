@@ -29,10 +29,10 @@ public class EnemyManager {
         this.start = start;
         this.end = end;
         loadEffectImg();
-        addEnemy(ORC);
-        addEnemy(BAT);
-        addEnemy(KNIGHT);
-        addEnemy(WOLF);
+        // addEnemy(ORC);
+        // addEnemy(BAT);
+        // addEnemy(KNIGHT);
+        // addEnemy(WOLF);
         loadEnemyImgs();
     }
 
@@ -65,6 +65,7 @@ public class EnemyManager {
         } else if (isAtEnd(e)) {
             // reached the end
             System.out.println("Lives Lost!");
+            e.kill();
         } else {
             setNewDirectionAndMove(e);
         }
@@ -146,6 +147,10 @@ public class EnemyManager {
         return 0;
     }
 
+    public void spawnEnemy(int nextEnemy) {
+        addEnemy(nextEnemy);
+    }
+
     public void addEnemy(int enemyType) {
         int x = start.getxCord() * 32;
         int y = start.getyCord() * 32;
@@ -195,6 +200,14 @@ public class EnemyManager {
 
     public ArrayList<Enemy> getEnemies() {
         return enemies;
+    }
+
+    public int getAmountOfAliveEnemies() {
+        int size = 0;
+        for (Enemy e : enemies)
+            if (e.isAlive())
+                size++;
+        return size;
     }
 
 }

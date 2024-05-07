@@ -38,6 +38,12 @@ public abstract class Enemy {
             alive = false;
     }
 
+    public void kill() {
+        // Is for killing enemy, when it reaches the end.
+        alive = false;
+        health = 0;
+    }
+
     public void slow() {
         slowTick = 0;
     }
