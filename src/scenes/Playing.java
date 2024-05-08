@@ -173,11 +173,7 @@ public class Playing extends GameScene implements SceneMethods {
                     }
                 }
             } else {
-                // get tower if exists on xy
                 Tower t = getTowerAt(mouseX, mouseY);
-                // if (t == null)
-                // return;
-                // else
                 actionBar.displayTower(t);
             }
         }
@@ -185,6 +181,14 @@ public class Playing extends GameScene implements SceneMethods {
 
     private void removeGold(int towerType) {
         actionBar.payForTower(towerType);
+    }
+
+    public void upgradeTower(Tower displayedTower) {
+        towerManager.upgradeTower(displayedTower);
+    }
+
+    public void removeTower(Tower displayedTower) {
+        towerManager.removeTower(displayedTower);
     }
 
     private Tower getTowerAt(int x, int y) {
