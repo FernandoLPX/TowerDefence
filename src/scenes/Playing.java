@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import enemies.Enemy;
+import helpz.Constants;
 import helpz.LoadSave;
 import main.Game;
 import managers.EnemyManager;
@@ -29,6 +30,7 @@ public class Playing extends GameScene implements SceneMethods {
     private WaveManager waveManager;
     private PathPoint start, end;
     private Tower selectedTower;
+    private int goldTick;
 
     public Playing(Game game) {
         super(game);
@@ -59,6 +61,10 @@ public class Playing extends GameScene implements SceneMethods {
     public void update() {
         updateTick();
         waveManager.update();
+        // Gold Tick
+        goldTick++;
+        if (goldTick % (60 * 3) == 0)
+            actionBar.addGold(1);
         if (isAllEnemiesDead()) {
             if (isThereMoreWaves()) {
                 waveManager.startWaveTimer();
@@ -162,6 +168,7 @@ public class Playing extends GameScene implements SceneMethods {
                 if (isTileGrass(mouseX, mouseY)) {
                     if (getTowerAt(mouseX, mouseY) == null) {
                         towerManager.addTower(selectedTower, mouseX, mouseY);
+                        removeGold(selectedTower.getTowerType());
                         selectedTower = null;
                     }
                 }
@@ -174,6 +181,10 @@ public class Playing extends GameScene implements SceneMethods {
                 actionBar.displayTower(t);
             }
         }
+    }
+
+    private void removeGold(int towerType) {
+        actionBar.payForTower(towerType);
     }
 
     private Tower getTowerAt(int x, int y) {
@@ -219,6 +230,10 @@ public class Playing extends GameScene implements SceneMethods {
 
     @Override
     public void mouseDragged(int x, int y) {
+    }
+
+    public void rewardPlayer(int enemyType) {
+        actionBar.addGold(Constants.Enemies.GetReward(enemyType));
     }
 
     public TowerManager getTowerManager() {
