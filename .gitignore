@@ -1,3 +1,5 @@
 .vscode/
 bin/
-/res/ideias.txt
+/res/*
+!/res/spriteatlas.png
+!/res/new_level.txt
