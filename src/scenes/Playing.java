@@ -263,4 +263,21 @@ public class Playing extends GameScene implements SceneMethods {
         return gamePaused;
     }
 
+    public void removeOneLife() {
+        actionBar.removeOneLife();
+    }
+
+    public void resetEverything() {
+        actionBar.resetEverything();
+        enemyManager.reset();
+        towerManager.reset();
+        projManager.reset();
+        waveManager.reset();
+        mouseX = 0;
+        mouseY = 0;
+        selectedTower = null;
+        goldTick = 0;
+        gamePaused = false;
+    }
+
 }

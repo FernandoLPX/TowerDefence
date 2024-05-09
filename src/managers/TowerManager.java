@@ -87,4 +87,9 @@ public class TowerManager {
         return towerImgs;
     }
 
+    public void reset() {
+        towers.clear();
+        towerAmount = 0;
+    }
+
 }

@@ -29,10 +29,6 @@ public class EnemyManager {
         this.start = start;
         this.end = end;
         loadEffectImg();
-        // addEnemy(ORC);
-        // addEnemy(BAT);
-        // addEnemy(KNIGHT);
-        // addEnemy(WOLF);
         loadEnemyImgs();
     }
 
@@ -64,7 +60,7 @@ public class EnemyManager {
             e.move(GetSpeed(e.getEnemyType()), e.getLastDir());
         } else if (isAtEnd(e)) {
             // reached the end
-            System.out.println("Lives Lost!");
+            playing.removeOneLife();
             e.kill();
         } else {
             setNewDirectionAndMove(e);
@@ -214,4 +210,7 @@ public class EnemyManager {
         playing.rewardPlayer(enemyType);
     }
 
+    public void reset() {
+        enemies.clear();
+    }
 }

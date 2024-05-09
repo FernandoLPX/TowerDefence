@@ -23,12 +23,22 @@ public class ActionBar extends Bar {
     private int gold = 100;
     private boolean showTowerCost;
     private int towerCostType;
+    private int lives = 25;
 
     public ActionBar(int x, int y, int width, int height, Playing playing) {
         super(x, y, width, height);
         this.playing = playing;
         formatter = new DecimalFormat("0.0");
         initButtons();
+    }
+
+    public void resetEverything() {
+        lives = 25;
+        towerCostType = 0;
+        showTowerCost = false;
+        gold = 100;
+        selectedTower = null;
+        displayedTower = null;
     }
 
     private void initButtons() {
@@ -47,6 +57,12 @@ public class ActionBar extends Bar {
 
         sellTower = new MyButton("Sell", 420, 702, 80, 25);
         upgradeTower = new MyButton("Upgrade", 545, 702, 80, 25);
+    }
+
+    public void removeOneLife() {
+        lives--;
+        if (lives <= 0)
+            SetGameState(GAME_OVER);
     }
 
     private void drawButtons(Graphics g) {
@@ -87,6 +103,10 @@ public class ActionBar extends Bar {
             g.setColor(Color.black);
             g.drawString("Game is Paused!", 110, 790);
         }
+
+        // Lives
+        g.setColor(Color.black);
+        g.drawString("Lives: " + lives, 110, 750);
 
     }
 
@@ -337,6 +357,10 @@ public class ActionBar extends Bar {
 
     public void addGold(int getReward) {
         this.gold += getReward;
+    }
+
+    public int getLives() {
+        return lives;
     }
 
 }

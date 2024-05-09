@@ -83,8 +83,8 @@ public class ProjectileManager {
                         explosions.add(new Explosion(p.getPos()));
                         explodeOnEnemies(p);
                     }
-                } else {
-                    // we do nothing
+                } else if (isProjOutsideBounds(p)) {
+                    p.setActive(false);
                 }
             }
         for (Explosion e : explosions)
@@ -115,6 +115,13 @@ public class ProjectileManager {
                 }
         }
         return false;
+    }
+
+    private boolean isProjOutsideBounds(Projectile p) {
+        if (p.getPos().x >= 0 && p.getPos().x <= 640 &&
+                p.getPos().y >= 0 && p.getPos().y <= 800)
+            return false;
+        return true;
     }
 
     public void draw(Graphics g) {
@@ -177,6 +184,12 @@ public class ProjectileManager {
             return pos;
         }
 
+    }
+
+    public void reset() {
+        projectiles.clear();
+        explosions.clear();
+        proj_id = 0;
     }
 
 }
