@@ -31,6 +31,7 @@ public class Playing extends GameScene implements SceneMethods {
     private PathPoint start, end;
     private Tower selectedTower;
     private int goldTick;
+    private boolean gamePaused;
 
     public Playing(Game game) {
         super(game);
@@ -59,27 +60,29 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public void update() {
-        updateTick();
-        waveManager.update();
-        // Gold Tick
-        goldTick++;
-        if (goldTick % (60 * 3) == 0)
-            actionBar.addGold(1);
-        if (isAllEnemiesDead()) {
-            if (isThereMoreWaves()) {
-                waveManager.startWaveTimer();
-                if (isWaveTimerOver()) {
-                    waveManager.increaseWaveIndex();
-                    enemyManager.getEnemies().clear();
-                    waveManager.resetEnemyIndex();
+        if (!gamePaused) {
+            updateTick();
+            waveManager.update();
+            // Gold Tick
+            goldTick++;
+            if (goldTick % (60 * 3) == 0)
+                actionBar.addGold(1);
+            if (isAllEnemiesDead()) {
+                if (isThereMoreWaves()) {
+                    waveManager.startWaveTimer();
+                    if (isWaveTimerOver()) {
+                        waveManager.increaseWaveIndex();
+                        enemyManager.getEnemies().clear();
+                        waveManager.resetEnemyIndex();
+                    }
                 }
             }
+            if (isTimeForNewEnemy())
+                spawnEnemy();
+            enemyManager.update();
+            towerManager.update();
+            projManager.update();
         }
-        if (isTimeForNewEnemy())
-            spawnEnemy();
-        enemyManager.update();
-        towerManager.update();
-        projManager.update();
     }
 
     private boolean isWaveTimerOver() {
@@ -205,6 +208,10 @@ public class Playing extends GameScene implements SceneMethods {
         projManager.newProjectile(t, e);
     }
 
+    public void setGamePaused(boolean gamePaused) {
+        this.gamePaused = gamePaused;
+    }
+
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             selectedTower = null;
@@ -250,6 +257,10 @@ public class Playing extends GameScene implements SceneMethods {
 
     public WaveManager getWaveManager() {
         return waveManager;
+    }
+
+    public boolean isGamePaused() {
+        return gamePaused;
     }
 
 }

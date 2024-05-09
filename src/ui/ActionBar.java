@@ -14,7 +14,7 @@ import static main.GameStates.*;
 public class ActionBar extends Bar {
 
     private Playing playing;
-    private MyButton bMenu;
+    private MyButton bMenu, bPause;
     private MyButton[] towerButtons;
     private Tower selectedTower;
     private Tower displayedTower;
@@ -33,6 +33,8 @@ public class ActionBar extends Bar {
 
     private void initButtons() {
         bMenu = new MyButton("Menu", 1, 641, 100, 100 / 3);
+        bPause = new MyButton("Pause", 1, 681, 100, 100 / 3);
+
         towerButtons = new MyButton[3];
         int w = 50;
         int h = 50;
@@ -49,6 +51,7 @@ public class ActionBar extends Bar {
 
     private void drawButtons(Graphics g) {
         bMenu.draw(g);
+        bPause.draw(g);
         for (MyButton b : towerButtons) {
             g.setColor(Color.gray);
             g.fillRect(b.x, b.y, b.width, b.height);
@@ -78,6 +81,12 @@ public class ActionBar extends Bar {
         // Tower Cost
         if (showTowerCost)
             drawTowerCost(g);
+
+        // Game paused text
+        if (playing.isGamePaused()) {
+            g.setColor(Color.black);
+            g.drawString("Game is Paused!", 110, 790);
+        }
 
     }
 
@@ -218,9 +227,19 @@ public class ActionBar extends Bar {
         gold -= getUpgradeAmount(displayedTower);
     }
 
+    private void togglePause() {
+        playing.setGamePaused(!playing.isGamePaused());
+        if (playing.isGamePaused())
+            bPause.setText("Unpause");
+        else
+            bPause.setText("Pause");
+    }
+
     public void mouseClicked(int x, int y) {
         if (bMenu.getBounds().contains(x, y))
             SetGameState(MENU);
+        else if (bPause.getBounds().contains(x, y))
+            togglePause();
         else {
             if (displayedTower != null) {
                 if (sellTower.getBounds().contains(x, y)) {
@@ -250,6 +269,7 @@ public class ActionBar extends Bar {
 
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
+        bPause.setMouseOver(false);
         showTowerCost = false;
         sellTower.setMouseOver(false);
         upgradeTower.setMouseOver(false);
@@ -257,6 +277,8 @@ public class ActionBar extends Bar {
             b.setMouseOver(false);
         if (bMenu.getBounds().contains(x, y))
             bMenu.setMouseOver(true);
+        else if (bPause.getBounds().contains(x, y))
+            bPause.setMouseOver(true);
         else {
             if (displayedTower != null) {
                 if (sellTower.getBounds().contains(x, y)) {
@@ -280,6 +302,8 @@ public class ActionBar extends Bar {
     public void mousePressed(int x, int y) {
         if (bMenu.getBounds().contains(x, y))
             bMenu.setMousePressed(true);
+        else if (bPause.getBounds().contains(x, y))
+            bPause.setMousePressed(true);
         else {
             if (displayedTower != null) {
                 if (sellTower.getBounds().contains(x, y)) {
@@ -300,6 +324,7 @@ public class ActionBar extends Bar {
 
     public void mouseReleased(int x, int y) {
         bMenu.resetBooleans();
+        bPause.resetBooleans();
         for (MyButton b : towerButtons)
             b.resetBooleans();
         sellTower.resetBooleans();
