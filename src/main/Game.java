@@ -29,8 +29,9 @@ public class Game extends JFrame implements Runnable {
     private GameOver gameOver;
 
     public Game() {
-        initClasses();
+        LoadSave.CreateFolder();
         createDefaultLevel();
+        initClasses();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         setTitle("Tower Defense");
@@ -45,7 +46,7 @@ public class Game extends JFrame implements Runnable {
         for (int i = 0; i < arr.length; i++)
             arr[i] = 0;
 
-        LoadSave.CreateLevel("new_level", arr);
+        LoadSave.CreateLevel(arr);
     }
 
     private void initClasses() {
